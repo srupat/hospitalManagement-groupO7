@@ -40,30 +40,39 @@ void queueTraversal(struct Node * ptr)
 void newAppointment(int age)
 {
     struct Node * p = (struct Node *)malloc(sizeof(struct Node));
+    struct Node * temp = front;
     if (p==NULL)
     {
         printf("Queue is full\n");
     }
+    
     else
     {
         p->age = age;
         if (front==NULL) // if queue is empty
         {
             front = rear = p;
+            front->next = NULL;
         }
+        
         else // queue is not empty
         {
             if(p->age>=rear->age)
             {
-                //insert in between second last element and rear
-                struct Node * ptr = front;
-                while (ptr->next != rear)
+                //insert in between second last element and rear     
+                if (front->next == NULL)
                 {
-                    ptr = ptr->next;
+                    front = p;
+                    p->next = rear;
                 }
-                p->next = rear; 
-                ptr->next = p;
-                               
+                else{                       
+                while (temp->next != rear)
+                {
+                    temp = temp->next;
+                }
+                p->next = rear;
+                temp->next = p;
+                }                           
             }
             else
             {
@@ -72,14 +81,14 @@ void newAppointment(int age)
                 rear->next = p;
                 rear = p;
             }
-            
+            // rear->next = p;
+            // rear = p;
         }
     }
 
 }
 
-// set up a system such that whenever a new node arrives, you have to just check whether the age is greater 
-// than or less than the age of the previous node and insert new node accordingly
+
 int grantAppointment()
 {
     int val = -1;
@@ -104,15 +113,13 @@ int main()
     newAppointment(10);
     newAppointment(20);
     newAppointment(15);
+    // newAppointment(15);
     newAppointment(47);
+    newAppointment(25);
+    newAppointment(5);
     queueTraversal(front);
-    //printf("patient with age %d has been granted an appointment \n",grantAppointment());
-    
+    printf("patient with age %d has been granted an appointment \n",grantAppointment());
+    printf("patient with age %d has been granted an appointment \n",grantAppointment());    
     //queueTraversal(front);
-
-    
-    
-    
-
     return 0;
 }
