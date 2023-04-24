@@ -57,32 +57,28 @@ void newAppointment(int age)
         
         else // queue is not empty
         {
-            if(p->age>=rear->age)
-            {
-                //insert in between second last element and rear     
-                if (front->next == NULL)
+                if(front->age <= age) // if first element is less than incoming element
                 {
+                    p->next = front;
                     front = p;
-                    p->next = rear;
+                    return;
                 }
-                else{                       
-                while (temp->next != rear)
+                while (temp->next != NULL && temp->next->age >= age)
                 {
                     temp = temp->next;
                 }
-                p->next = rear;
-                temp->next = p;
-                }                           
-            }
-            else
-            {
-                // insert at end
-                p->next = NULL;
-                rear->next = p;
-                rear = p;
-            }
-            // rear->next = p;
-            // rear = p;
+                if (temp->next == NULL) // insert at end
+                {
+                    p->next = NULL;
+                    rear->next = p;
+                    rear = p;
+                }
+                else 
+                {
+                    p->next = temp->next;
+                    temp->next = p;                
+                }    
+           
         }
     }
 
@@ -113,13 +109,12 @@ int main()
     newAppointment(10);
     newAppointment(20);
     newAppointment(15);
-    // newAppointment(15);
     newAppointment(47);
     newAppointment(25);
     newAppointment(5);
     queueTraversal(front);
     printf("patient with age %d has been granted an appointment \n",grantAppointment());
     printf("patient with age %d has been granted an appointment \n",grantAppointment());    
-    //queueTraversal(front);
+    queueTraversal(front);
     return 0;
 }
