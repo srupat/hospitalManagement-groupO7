@@ -13,6 +13,7 @@ struct Node
 {
     //struct patient * data;
     int age;
+    int sev;
     struct Node * next;
 };
 
@@ -37,7 +38,7 @@ void queueTraversal(struct Node * ptr)
     printf("The age of the patient is %d\n",ptr->age);
     
 }
-void newAppointment(int age)
+void newAppointment(int age, int sev)
 {
     struct Node * p = (struct Node *)malloc(sizeof(struct Node));
     struct Node * temp = front;
@@ -49,6 +50,7 @@ void newAppointment(int age)
     else
     {
         p->age = age;
+        p->sev = sev;
         if (front==NULL) // if queue is empty
         {
             front = rear = p;
@@ -57,13 +59,13 @@ void newAppointment(int age)
         
         else // queue is not empty
         {
-            if(front->age <= age) // if first element is less than incoming element
+            if(front->age <= age || front->sev <= sev) // if first element is less than incoming element
             {
                 p->next = front;
                 front = p;
                 return;
             }
-            while (temp->next != NULL && temp->next->age >= age)
+            while (temp->next != NULL && temp->next->age >= age && temp->next->sev >= sev)
             {
                 temp = temp->next;
             }
@@ -106,7 +108,7 @@ int grantAppointment()
 int main()
 {
     printf("Welcome to Hospital XYZ\n");
-    int num,age;
+    int num,age,sev;
     char ch;
     while (1)
     {
@@ -117,7 +119,9 @@ int main()
             case 1:            
                 printf("What is your age?\n");
                 scanf("%d",&age);
-                newAppointment(age);
+                printf("What is the severity of your condition on a scale of 1 to 5\n");
+                scanf("%d",&sev);
+                newAppointment(age,sev);
                 break;
             case 2:
                 printf("\nAppointment has been granted to patient with age %d\n",grantAppointment(front));
