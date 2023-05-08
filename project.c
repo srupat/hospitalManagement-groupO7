@@ -121,7 +121,11 @@ int main()
                 scanf("%d",&age);
                 printf("What is the severity of your condition on a scale of 1 to 5\n");
                 scanf("%d",&sev);
-                newAppointment(age,sev);
+                if(sev>5)
+                {
+                    printf("Please enter severity range between 1 to 5\n");
+                }
+                else{newAppointment(age,sev);}
                 break;
             case 2:
                 printf("\nAppointment has been granted to patient with age %d\n",grantAppointment(front));
