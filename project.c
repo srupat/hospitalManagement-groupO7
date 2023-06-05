@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
-
+// search specific patient
+// cancel appointment
+// queue size display
 struct Node * front = NULL;
 struct Node * rear = NULL;
 // struct patient
@@ -38,6 +40,31 @@ void queueTraversal(struct Node * ptr)
     printf("The age of the patient is %d\n",ptr->age);
     
 }
+void searchSpecificPatientByIndex(struct Node * ptr, int index)
+{
+    int i=0;
+    struct Node * temp = ptr;
+    while(i!=index-1 && temp != rear)
+    {
+        temp = temp->next;
+        i++;
+    }
+    printf("The age of the required patient is %d and the severity of the patient is %d",temp->age,temp->sev);
+}
+
+int searchSpecificPatientByAge(struct Node * ptr, int age)
+{
+    int i=1;
+    struct Node * temp = ptr;    
+    while(temp!=rear)
+    {
+        if(temp->age==age) return i;
+        temp = temp->next;
+        i++;
+    }
+    return -1; //patient not found
+}
+
 void newAppointment(int age, int sev)
 {
     struct Node * p = (struct Node *)malloc(sizeof(struct Node));
@@ -86,7 +113,6 @@ void newAppointment(int age, int sev)
 
 }
 
-
 int grantAppointment()
 {
     int val = -1;
@@ -107,7 +133,7 @@ int grantAppointment()
 
 int main()
 {
-    printf("Welcome to Hospital XYZ\n");
+    printf("Welcome to Hospital VIT\n");
     int num,age,sev;
     char ch;
     while (1)
