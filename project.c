@@ -55,10 +55,13 @@ void searchSpecificPatientByIndex(struct Node * ptr, int index)
 int searchSpecificPatientByAge(struct Node * ptr, int age)
 {
     int i=1;
-    struct Node * temp = ptr;    
-    while(temp!=rear)
+    struct Node * temp = ptr;
+    while(temp!=NULL)
     {
-        if(temp->age==age) return i;
+        if(temp->age == age)
+        {
+            return i;
+        }
         temp = temp->next;
         i++;
     }
@@ -162,6 +165,17 @@ void cancelAppointment(int age, int severity)
     }
     
 }
+int size(struct Node * ptr)
+{
+    int count = 0;
+    while(ptr!=NULL)
+    {        
+        count++;
+        ptr = ptr->next;
+    }
+    return count;
+}
+
 
 int main()
 {
@@ -170,7 +184,7 @@ int main()
     char ch;
     while (1)
     {
-        printf("\npress 1 to take appointment\npress 2 to grant appointment\npress 3 to show appointment log\npress 4 to search specific patient according to appointment number\npress 5 to search specific patient by age\npress 6 to cancel appointment\npress 7 to exit\n");
+        printf("\npress 1 to take appointment\npress 2 to grant appointment\npress 3 to show appointment log\npress 4 to search specific patient according to appointment number\npress 5 to search specific patient by age\npress 6 to cancel appointment\npress 7 to display number of patients\npress 8 to exit\n");
         scanf("%d",&num);
         switch(num)
         {
@@ -199,7 +213,7 @@ int main()
             case 5:
                 printf("\nEnter the age of the patient that you want to search\n");
                 scanf("%d",&search_age);
-                searchSpecificPatientByAge(front,search_age);
+                printf("\nThe number of the patient in the appointment log is %d\n", searchSpecificPatientByAge(front,search_age));
                 break;
             case 6:
                 printf("Enter age of the patient\n");
@@ -209,6 +223,9 @@ int main()
                 cancelAppointment(cancel_age,cancel_sev);
                 break;
             case 7:
+                printf("\nThe number of patients in the appointment log is %d\n",size(front));
+                break;
+            case 8:
                 exit(1);
             default:
                 printf("Invalid\n");
